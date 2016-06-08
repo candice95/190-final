@@ -20,6 +20,11 @@ class RobotLogger():
                 PolicyList,
                 self.handle_mdp_policy_data
         )
+        self.q_policy_result = rospy.Subscriber(
+                "/results/qlearn_policy_list",
+                PolicyList,
+                self.handle_qlearn_policy_data
+        )
         self.simulation_complete_sub = rospy.Subscriber(
                 "/map_node/sim_complete",
                 Bool,
@@ -33,7 +38,9 @@ class RobotLogger():
     def init_files(self):
         open('path_list.json', 'w+').close()
         open('policy_list.json', 'w+').close()
+	open('qlearn_policy_list.json', 'w+').close()
 
+	self.qlearn_policy_list = []	
         self.policy_list = []
         self.path_list = []
         self.iteration_number = 0
@@ -44,11 +51,13 @@ class RobotLogger():
 
     def handle_mdp_policy_data(self, policy_list):
         self.policy_list.append(policy_list.data)
+    def handle_qlearn_policy_data(self, policy_list):
+        self.qlearn_policy_list.append(policy_list.data)
         if self.generate_video:
             data_to_publish = self.convert_list_to_2d_array(policy_list.data)
             image_util.save_image_for_iteration(data_to_publish, self.iteration_number)
             self.iteration_number += 1
-
+ 
     def handle_a_star_algorithm_path(self, path_list):
         self.path_list.append(path_list.data)
 
@@ -63,6 +72,10 @@ class RobotLogger():
             with open('policy_list.json', 'w') as policy:
                 #Saving only the last policy to be compared
                 json.dump(self.policy_list[-1], policy)
+            with open('qlearn_policy_list.json', 'w') as qPolicy:
+		print "subscribed qlearn policy : "
+		print self.qlearn_policy_list[-1]
+                json.dump(self.qlearn_policy_list[-1], qPolicy)
 
 if __name__ == '__main__':
     rl = RobotLogger()
