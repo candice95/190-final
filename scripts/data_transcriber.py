@@ -73,8 +73,6 @@ class RobotLogger():
                 #Saving only the last policy to be compared
                 json.dump(self.policy_list[-1], policy)
             with open('qlearn_policy_list.json', 'w') as qPolicy:
-		print "subscribed qlearn policy : "
-		print self.qlearn_policy_list[-1]
                 json.dump(self.qlearn_policy_list[-1], qPolicy)
 
 if __name__ == '__main__':

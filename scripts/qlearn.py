@@ -9,7 +9,6 @@ def qlearn():
 	cur_y = start_y
 	# value iteration
 	qList = []
-	pitCount = 0
 	for i in range(itr):
 		randNum = random.uniform(0,1)
 		randNum2 = random.uniform(0,1)
@@ -51,7 +50,6 @@ def qlearn():
 			u_i = r + d_factor * max([left_q, right_q, up_q, down_q]) 
 			qMapCur[q] = (1-alpha) * qMapPrev[q] + alpha * u_i 
 		elif [new_x, new_y] in pits:
-			pitCount += 1
 			new_x = cur_x
 			new_y = cur_y
 			r = r_pit
@@ -76,7 +74,6 @@ def qlearn():
 			down_q = qMapPrev[str(new_x) + str(new_y) + "down"]
 			u_i = r + d_factor * max([left_q, right_q, up_q, down_q]) 
 			qMapCur[q] = (1-alpha) * qMapPrev[q] + alpha * u_i 
-#		print "new x: " + str(new_x) + " new y: " + str(new_y)
 		cur_x = new_x
 		cur_y = new_y
 		# update q maps
@@ -89,24 +86,6 @@ def qlearn():
 				for w in range(width):
 					qPolicy.append(mapPolicy[h][w])
 			qList.append(qPolicy)
-	print "pits count " + str(pitCount)	
-	# update policy
-	#setPolicy()
-
-	print "[1][2]up" + str(qMapCur['12up'])	
-	print "[1][2]down" + str(qMapCur['12down'])	
-	print "[1][2]left" + str(qMapCur['12left'])	
-	print "[1][2]right" + str(qMapCur['12right'])	
-	print "[2][2]up" + str(qMapCur['22up'])	
-	print "[2][2]down" + str(qMapCur['22down'])	
-	print "[2][2]left" + str(qMapCur['22left'])	
-	print "[2][2]right" + str(qMapCur['22right'])	
-	print "[2][3]up" + str(qMapCur['23up'])	
-	#qPolicy = []
-	#for h in range(height):
-	#	for w in range(width):
-	#		qPolicy.append(mapPolicy[h][w])
-	#print qPolicy	
 	return qList
 
 def generateMove(randNum2, command):
