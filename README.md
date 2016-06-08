@@ -1,6 +1,8 @@
-#Path Planning Algorithms
+Final Project for CSE190: Reinforcement Learning
 
-In this assignment you need to implement:
+This project is an extension of PA3. In this project, we implemented algorithm for reinforcement learning.
 
-1. **A Star Search Algorithm** - To find an efficient path from the starting position to the goal.
-2. **Value Iteration (Markov Decision Process)** - To find the optimal policy at each point in the grid, maximizing based on the rewards.
+Two different configuration files can be used: qlearn_config.json and qlearn_config2.json.
+Users can change the json file name in read_config.py to run on either configuration.
+
+To run this project: roslaunch cse_190_assi_3 solution_python.launch
